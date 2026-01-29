@@ -1,8 +1,8 @@
 {
-  "name": "ari-client",
-  "version": "2.2.0",
+  "name": "@jose_jonathan/ari-client",
+  "version": "3.0.0",
   "description": "JavaScript client for Asterisk REST Interface.",
-  "homepage": "https://github.com/asterisk/node-ari-client",
+  "homepage": "https://github.com/josejonathan7/node-ari-client",
   "keywords": [
     "Asterisk",
     "ARI"
@@ -15,17 +15,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/asterisk/node-ari-client"
+    "url": "git://github.com/josejonathan7/node-ari-client"
   },
   "bugs": {
-    "url": "https://issues.asterisk.org",
-    "email": "asterisk-app-dev@lists.digium.com"
+    "email": "josejonathan689@gmail.com"
   },
   "license": "Apache-2.0",
-  "author": "Samuel Fortier-Galarneau",
+  "author": "josé machado",
   "dependencies": {
     "backoff-func": "^0.1.2",
-    "bluebird": "^3.7.2",
     "lodash": "^4.17.23",
     "swagger-client": "^3.36.0",
     "ws": "^8.19.0"
