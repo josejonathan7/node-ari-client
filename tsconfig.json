@@ -1,0 +1,22 @@
+{
+	"exclude": ["./lib", "./examples"],
+	"compilerOptions": {
+		"rootDir": "./src",
+		"outDir": "./lib",
+		"module": "nodenext",
+		"target": "es2023",
+		"moduleResolution": "nodenext",
+		"allowJs": true,
+		"sourceMap": true,
+		"declaration": true,
+		"declarationMap": true,
+		"noUncheckedIndexedAccess": true,
+		"strict": true,
+		"isolatedModules": true,
+		"noUncheckedSideEffectImports": true,
+		"moduleDetection": "force",
+		"skipLibCheck": true,
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true
+	}
+}

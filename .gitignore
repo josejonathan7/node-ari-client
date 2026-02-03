@@ -1,8 +1,0 @@
-*.swp
-node_modules/
-doc/
-.nyc_output/
-coverage/
-.idea/
-*.log
-public
