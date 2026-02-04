@@ -9,7 +9,7 @@
   ],
   "main": "./lib/client.js",
   "scripts": {
-    "dev": "node -r ts-node/register --env-file=./.env src/index.ts",
+    "dev": "node -r ts-node/register ./testeServer.ts",
 	"build": "tsc -p tsconfig.build.json",
 	"start": "node --env-file=./.env dist/index.js"
   },
