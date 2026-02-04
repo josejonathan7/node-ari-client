@@ -1,4 +1,6 @@
-import { IEndpoints } from "./properties/endpoint";
+import { IBridge } from "./properties/bridges/bridgeInterfaces";
+import { IEndpoints } from "./properties/endpoints/endpointInterfaces";
+
 
 
 export interface IClient {
@@ -8,6 +10,7 @@ export interface IClient {
 
 export type IClientProps = {
 	endpoints: IEndpoints;
+	bridges: IBridge;
 }
 
 export type ClientConnection = {
@@ -17,4 +20,13 @@ export type ClientConnection = {
 	prefix: string;
 	user: string;
 	pass: string;
+}
+
+export interface ISwaggerErrorFormated {
+	response: {
+		status: number;
+		headers: object;
+		data: string;
+		body: object;
+	}
 }

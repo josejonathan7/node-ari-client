@@ -2,16 +2,16 @@ import events from "node:events";
 import { ClientConnection, IClient, IClientProps } from "./clientInterfaces";
 
 export class Client extends events.EventEmitter implements IClient {
-	private readonly props: IClientProps;
 	readonly endpoints: IClientProps["endpoints"];
+	readonly bridges: IClientProps["bridges"];
 	private readonly connection: ClientConnection;
 	private readonly ariUrl: string;
 	private readonly credentials: string;
 
 	constructor(baseURL: string, user: string, password: string, props: IClientProps) {
 		super();
-		this.props = props;
 		this.endpoints = props.endpoints;
+		this.bridges = props.bridges;
 		const parsedUrl = new URL(baseURL);
 
 		this.connection = {
@@ -46,7 +46,6 @@ export class Client extends events.EventEmitter implements IClient {
 
 
 			if (knownType === "endpoints") {
-				this.#mountEndpointProperty();
 
 				continue;
 			}

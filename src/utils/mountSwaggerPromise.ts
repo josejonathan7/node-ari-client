@@ -1,4 +1,4 @@
-import swagger from "swagger-client";
+import swagger, { ISwaggerErrorResponse, ISwaggerResponse } from "swagger-client";
 
 interface IDataToRequestSwagger {
 	ariUrl: string;
@@ -9,7 +9,7 @@ interface IDataToRequestSwagger {
 	queryParams?: string;
 }
 
-export type MountSwaggerPromise = (data: IDataToRequestSwagger) => Promise<any>
+export type MountSwaggerPromise = <K>(data: IDataToRequestSwagger) => Promise<ISwaggerResponse<K>>
 
 export const mountSwaggerPromise: MountSwaggerPromise = (data: IDataToRequestSwagger) => {
 	return swagger({
@@ -34,9 +34,14 @@ export const mountSwaggerPromise: MountSwaggerPromise = (data: IDataToRequestSwa
 		},
 		responseInterceptor: (res) => {
 			if (!res.ok) {
-				console.log(res);
+				const error = res as ISwaggerErrorResponse;
 
-				throw new Error(res);
+				return {
+					body: error.body,
+					data: error.data,
+					headers: error.headers,
+					status: error.status,
+				};
 			}
 
 			if (res.spec) {
