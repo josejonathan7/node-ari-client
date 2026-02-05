@@ -1,4 +1,4 @@
-import { IBridge, IBridgeAddChannelResponse, IBridgeCreateResponse, IBridgeCreateWihIdResponse, IBridgeGetResponse, IBridgeListResponse, IBridgePlayResponse, IBridgePlayWithIdResponse, IBridgeProps, IBridgeRecordResponse, IDataToAddChannel, IDataToCreateBridge, IDataToCreateWithIdBridge, IDataToPlayBridge, IDataToPlayWithIdBridge, IDataToRecordBridge } from "./bridgeInterfaces";
+import { IBridge, IBridgeCreateResponse, IBridgeCreateWihIdResponse, IBridgeGetResponse, IBridgeListResponse, IBridgePlayResponse, IBridgePlayWithIdResponse, IBridgeProps, IBridgeRecordResponse, IDataToAddChannel, IDataToCreateBridge, IDataToCreateWithIdBridge, IDataToPlayBridge, IDataToPlayWithIdBridge, IDataToRecordBridge } from "./bridgeInterfaces";
 
 
 export class Bridge implements IBridge {
@@ -56,7 +56,7 @@ export class Bridge implements IBridge {
 			queryParams = `${queryParams}&role=${encodeURIComponent(params.role)}`;
 		}
 
-		const swaggerResponse = await this.props.mountSwaggerPromise<IBridgeAddChannelResponse["spec"]>({
+		const swaggerResponse = await this.props.mountSwaggerPromise<void>({
 			ariUrl: this.props.ariUrl,
 			credentials: this.props.credentials,
 			httpMethod: "POST",
@@ -153,16 +153,13 @@ export class Bridge implements IBridge {
 			}
 		}
 
-		const name = params.name ? `name=${encodeURIComponent(params.name)}&` : undefined;
-		const type = params.type ? `type=${encodeURIComponent(params.type)}&` : undefined;
-
 		let queryParams: string | undefined = "?";
-		if (name) {
-			queryParams = `${queryParams}${name}`;
+		if (params.name) {
+			queryParams = `${queryParams}name=${encodeURIComponent(params.name)}&`;
 		}
 
-		if (type) {
-			queryParams = `${queryParams}${type}`;
+		if (params.type) {
+			queryParams = `${queryParams}type=${encodeURIComponent(params.type)}&`;
 		}
 
 		queryParams = queryParams.length > 1 ? queryParams.replace(/.$/, "") : undefined;
@@ -372,7 +369,6 @@ export class Bridge implements IBridge {
 			throw new Error("bridgeId is required");
 		}
 
-
 		if (typeof params.format !== "string" || !params.format.trim()) {
 			throw new Error("format is required");
 		}
@@ -435,5 +431,112 @@ export class Bridge implements IBridge {
 
 		return swaggerResponse.spec;
 	};
+
+	async removeChannel(params: { bridgeId: string; channel: string | string[]; }) {
+		if (!params || typeof params !== "object") {
+			throw new Error("data object is required");
+		}
+
+		if (typeof params.bridgeId !== "string" || !params.bridgeId.trim()) {
+			throw new Error("bridgeId is required");
+		}
+
+		if (typeof params.channel !== "string" && !Array.isArray(params.channel)) {
+			throw new Error("channel is required");
+		}
+
+		if (Array.isArray(params.channel)) {
+			if (!params.channel.every(k => typeof k === "string")) {
+				throw new Error("channel is string");
+			}
+		}
+
+		const pathParams = `/${encodeURIComponent(params.bridgeId)}/removeChannel`;
+		const queryParams = `?channel=${encodeURIComponent(Array.isArray(params.channel) ? params.channel.join(",") : params.channel)}`;
+		const swaggerResponse = await this.props.mountSwaggerPromise<void>({
+			ariUrl: this.props.ariUrl,
+			credentials: this.props.credentials,
+			httpMethod: "POST",
+			resource: this.knowType,
+			pathParams,
+			queryParams
+		});
+
+		return swaggerResponse.spec;
+	}
+
+	async setVideoSource(params: { bridgeId: string; channelId: string; }) {
+		if (!params || typeof params !== "object") {
+			throw new Error("data object is required");
+		}
+
+		if (typeof params.bridgeId !== "string" || !params.bridgeId.trim()) {
+			throw new Error("bridgeId is required");
+		}
+
+		if (typeof params.channelId !== "string" || !params.channelId.trim()) {
+			throw new Error("channelId is required");
+		}
+
+		const pathParams = `/${encodeURIComponent(params.bridgeId)}/videoSource/${params.channelId}`;
+
+		const swaggerResponse = await this.props.mountSwaggerPromise<void>({
+			ariUrl: this.props.ariUrl,
+			credentials: this.props.credentials,
+			httpMethod: "POST",
+			resource: this.knowType,
+			pathParams
+		});
+
+		return swaggerResponse.spec;
+	}
+
+	async startMoh(params: { bridgeId: string; mohClass?: string; }) {
+		if (!params || typeof params !== "object") {
+			throw new Error("data object is required");
+		}
+
+		if (typeof params.bridgeId !== "string" || !params.bridgeId.trim()) {
+			throw new Error("bridgeId is required");
+		}
+
+		if (params.mohClass) {
+			if (typeof params.mohClass !== "string" || !params.mohClass.trim()) {
+				throw new Error("mohClass is string");
+			}
+		}
+
+		const pathParams = `/${encodeURIComponent(params.bridgeId)}/moh`;
+		const queryParams = params.mohClass ? `?mohClass=${encodeURIComponent(params.mohClass)}` : undefined;
+
+		await this.props.mountSwaggerPromise<void>({
+			ariUrl: this.props.ariUrl,
+			credentials: this.props.credentials,
+			httpMethod: "POST",
+			resource: this.knowType,
+			pathParams,
+			queryParams
+		});
+	}
+
+	async stopMoh(params: { bridgeId: string; }) {
+		if (!params || typeof params !== "object") {
+			throw new Error("data object is required");
+		}
+
+		if (typeof params.bridgeId !== "string" || !params.bridgeId.trim()) {
+			throw new Error("bridgeId is required");
+		}
+
+		const pathParams = `/${encodeURIComponent(params.bridgeId)}/moh`;
+
+		await this.props.mountSwaggerPromise<void>({
+			ariUrl: this.props.ariUrl,
+			credentials: this.props.credentials,
+			httpMethod: "DELETE",
+			resource: this.knowType,
+			pathParams
+		});
+	}
 }
 

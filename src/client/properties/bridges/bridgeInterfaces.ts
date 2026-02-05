@@ -3,7 +3,7 @@ import { MountSwaggerPromise } from "../../../utils/mountSwaggerPromise";
 
 
 export interface IBridge {
-	addChannel(params: IDataToAddChannel): Promise<IBridgeAddChannelResponse["spec"]>;
+	addChannel(params: IDataToAddChannel): Promise<void>;
 	clearVideoSource(params: {bridgeId: string;}): Promise<void>;
 	create(params: IDataToCreateBridge): Promise<IBridgeCreateResponse["spec"]>;
 	createWithId(params: IDataToCreateWithIdBridge): Promise<IBridgeCreateWihIdResponse["spec"]>;
@@ -13,6 +13,10 @@ export interface IBridge {
 	play(params: IDataToPlayBridge): Promise<IBridgePlayResponse["spec"]>;
 	playWithId(params: IDataToPlayWithIdBridge): Promise<IBridgePlayWithIdResponse["spec"]>;
 	record(params: IDataToRecordBridge): Promise<IBridgeRecordResponse["spec"]>;
+	removeChannel(params: {bridgeId: string; channel: string | string[];}): Promise<void>;
+	setVideoSource(params: {bridgeId: string; channelId: string;}): Promise<void>;
+	startMoh(params: {bridgeId: string; mohClass?: string;}): Promise<void>;
+	stopMoh(params: {bridgeId: string;}): Promise<void>;
 }
 
 export type IBridgeProps = {
@@ -65,8 +69,6 @@ export interface IDataToRecordBridge {
 }
 
 
-
-export type IBridgeAddChannelResponse = ISwaggerResponse<IBridgeBodyResponse>; //não consegui testar
 export type IBridgeCreateResponse = ISwaggerResponse<IBridgeBodyResponse>;
 export type IBridgeCreateWihIdResponse = ISwaggerResponse<IBridgeBodyResponse>;
 export type IBridgeGetResponse = ISwaggerResponse<IBridgeBodyResponse>;

@@ -1,16 +1,22 @@
+import { EventEmitter } from "node:stream";
+import { Resources } from "../interfaces/events";
 import { IBridge } from "./properties/bridges/bridgeInterfaces";
 import { IEndpoints } from "./properties/endpoints/endpointInterfaces";
+import { IChannel } from "./properties/channels/channelInterfaces";
 
 
 
-export interface IClient {
-	_attachApi(): Promise<void>
+export interface IClient extends EventEmitter {
+	on<K extends keyof Resources>(event: K, listener: Resources[K]): this;
+	//ping(): void;
+	//stop(): void;
 }
 
 
 export type IClientProps = {
-	endpoints: IEndpoints;
 	bridges: IBridge;
+	channels: IChannel;
+	endpoints: IEndpoints;
 }
 
 export type ClientConnection = {
