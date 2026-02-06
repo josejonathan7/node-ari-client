@@ -28,7 +28,6 @@ export const mountSwaggerPromise: MountSwaggerPromise = (data: IDataToRequestSwa
 			req.url = formatUrl;
 			req.method = data.httpMethod;
 			req.headers["Authorization"] = `Basic ${data.credentials}`;
-			console.log(req);
 
 			return req;
 		},

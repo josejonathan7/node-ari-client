@@ -211,9 +211,17 @@ export class Bridge implements IBridge {
 			httpMethod: "GET",
 			pathParams,
 			resource: this.knowType
-		});
+		})
+			.then(res => res.spec)
+			.catch(error => {
+				if (error.status === 404) {
+					return undefined;
+				}
 
-		return swaggerResponse.spec;
+				throw new Error(error);
+			});
+
+		return swaggerResponse;
 	};
 
 	async list() {

@@ -1,4 +1,4 @@
-import { EventEmitter } from "node:stream";
+import { EventEmitter } from "events";
 import { Resources } from "../interfaces/events";
 import { IBridge } from "./properties/bridges/bridgeInterfaces";
 import { IEndpoints } from "./properties/endpoints/endpointInterfaces";
@@ -8,8 +8,10 @@ import { IChannel } from "./properties/channels/channelInterfaces";
 
 export interface IClient extends EventEmitter {
 	on<K extends keyof Resources>(event: K, listener: Resources[K]): this;
+	//emit<K extends keyof Resources>(event: K, ...args: Resources[K]): boolean;
 	//ping(): void;
-	//stop(): void;
+	start(apps: string | string[], subscribeAll: string | null): void;
+	stop(): void;
 }
 
 

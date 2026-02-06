@@ -8,7 +8,7 @@ export interface IBridge {
 	create(params: IDataToCreateBridge): Promise<IBridgeCreateResponse["spec"]>;
 	createWithId(params: IDataToCreateWithIdBridge): Promise<IBridgeCreateWihIdResponse["spec"]>;
 	destroy(params: {bridgeId: string;}): Promise<void>;
-	get(params: {bridgeId: string;}): Promise<IBridgeGetResponse["spec"]>;
+	get(params: {bridgeId: string;}): Promise<IBridgeGetResponse["spec"] | undefined>;
 	list(): Promise<IBridgeListResponse["spec"]>;
 	play(params: IDataToPlayBridge): Promise<IBridgePlayResponse["spec"]>;
 	playWithId(params: IDataToPlayWithIdBridge): Promise<IBridgePlayWithIdResponse["spec"]>;
@@ -101,4 +101,5 @@ export interface IBridgeBodyResponse {
     channels: string[];
     creationtime: Date;
     video_mode: string;
+	video_source_id?: string;
 }
